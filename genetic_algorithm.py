@@ -53,7 +53,17 @@ for route in population:
     fitness = compute_total_distance(route, distances)
     print(f"Route: {route}, Total Distance: {fitness}")
 #Selection - Select individuals based on their fitness to create offspring for the next generation (e.g., tournament selection, roulette wheel selection, etc.)
-
+def tournament_selection(population, fitness, k=2):
+    selected = []
+    for _ in range(len(population)):
+        idxs = rand.sample(range(len(population)), k) #Randomly select k individuals from the population
+        
+        best_idx = idxs[0]
+        for i in idxs:
+            if fitness[i] < fitness[best_idx]: #Select the individual with the lowest total distance (best fitness)
+                best_idx = i
+        selected.append(population[best_idx])
+    return selected
 #Crossover - Combine two parent solutions to create offspring (e.g., one-point crossover, two-point crossover, uniform crossover, etc.)
 
 #Mutation - Introduce random changes to offspring to maintain genetic diversity (e.g., bit flip mutation, swap mutation, etc.)
