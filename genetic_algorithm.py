@@ -2,23 +2,42 @@ import numpy as np
 import random as rand
 #Encoding - Represent in format suitable for the problem (e.g., binary, real-valued, etc.)
 POPULATION_SIZE = 8
-Population = []
-
-NUMBER_OF_CITIES = 4
-Cities = ['A', 'B', 'C', 'D']
-
 GENERATIONS = 10
 
-distances = []
-
-#Initialization + Fitness Function - Generate initial population randomly or using heuristics and evaluate how well each solution performs with respect to the problem's objective
-#Number of routes to generate in the initial population, which can be adjusted based on the problem's complexity and computational resources available.
+NUMBER_OF_CITIES = 4
+cities = ['A', 'B', 'C', 'D']
+"""
+Dictionary chosen because of string keys for cities and easy access to distances between cities. 
+The values are nested dictionaries where the keys are the destination cities and the values are the distances from the 
+source city to the destination city. 
+This structure allows for efficient lookups of distances between any two cities in the traveling salesman problem.
+"""
+distances = {
+    'A': {'A': 0, 'B': 5, 'C': 10, 'D': 15},
+    'B': {'A': 5, 'B': 0, 'C': 20, 'D': 25},
+    'C': {'A': 15, 'B': 35, 'C': 0, 'D': 30},
+    'D': {'A': 20, 'B': 25, 'C': 30, 'D': 0}
+}
 
 # Population initialization function: Generate a random route for the traveling salesman problem
-def generate_random_route(cities):
-    route = cities.copy()
-    #Create a random route by shuffling the order of cities by implementing a function
+def initialize_population(population_size, cities):
+    population = []
+    for _ in range(population_size):
+        route = generate_random_route(cities)
+        population.append(route)
+    return population
 
+
+def fy_shuffle(cities):
+     for i in range (len(cities)):
+           j = rand.randrange(i,len(cities))
+           temp = cities[i]
+           cities[i] = cities[j]
+           cities[j] = temp
+
+def generate_random_route(cities):
+    route = cities.copy() #Create a copy of the cities list to avoid modifying the original
+    fy_shuffle(route) #Create a random route by shuffling the order of cities by implementing a function
     return route
 
 #Fitness function: Calculate the total distance of the route (lower is better)
@@ -29,6 +48,10 @@ def compute_total_distance(route, distances):
     total_distance += distances[route[-1]][route[0]] #Return to the starting city to complete the tour outside of the loop
     return total_distance
 
+population = initialize_population(POPULATION_SIZE, cities)
+for route in population:
+    fitness = compute_total_distance(route, distances)
+    print(f"Route: {route}, Total Distance: {fitness}")
 #Selection - Select individuals based on their fitness to create offspring for the next generation (e.g., tournament selection, roulette wheel selection, etc.)
 
 #Crossover - Combine two parent solutions to create offspring (e.g., one-point crossover, two-point crossover, uniform crossover, etc.)
