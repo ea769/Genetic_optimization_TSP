@@ -15,8 +15,8 @@ This structure allows for efficient lookups of distances between any two cities 
 distances = {
     'A': {'A': 0, 'B': 5, 'C': 10, 'D': 15},
     'B': {'A': 5, 'B': 0, 'C': 20, 'D': 25},
-    'C': {'A': 15, 'B': 35, 'C': 0, 'D': 30},
-    'D': {'A': 20, 'B': 25, 'C': 30, 'D': 0}
+    'C': {'A': 15, 'B': 27, 'C': 0, 'D': 30},
+    'D': {'A': 20, 'B': 27, 'C': 30, 'D': 0}
 }
 
 # Population initialization function: Generate a random route for the traveling salesman problem
