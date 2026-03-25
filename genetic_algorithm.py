@@ -6,11 +6,13 @@ GENERATIONS = 10
 
 NUMBER_OF_CITIES = 4
 cities = ['A', 'B', 'C', 'D']
+
 """
 Dictionary chosen because of string keys for cities and easy access to distances between cities. 
 The values are nested dictionaries where the keys are the destination cities and the values are the distances from the 
 source city to the destination city. 
 This structure allows for efficient lookups of distances between any two cities in the traveling salesman problem.
+
 """
 distances = {
     'A': {'A': 0, 'B': 5, 'C': 10, 'D': 15},
@@ -52,6 +54,7 @@ population = initialize_population(POPULATION_SIZE, cities)
 for route in population:
     fitness = compute_total_distance(route, distances)
     print(f"Route: {route}, Total Distance: {fitness}")
+    
 #Selection - Select individuals based on their fitness to create offspring for the next generation (e.g., tournament selection, roulette wheel selection, etc.)
 def tournament_selection(population, fitness, k=2):
     selected = []
